@@ -13,9 +13,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class VentanaJuego extends JFrame {
-    private int x = 200;
-    private int y = 200;
-    private int speed = 5;
+    private int x = 350;
+    private int y = 630;
+    private int velocidad = 15;
 
     public VentanaJuego() {
         iniciarComponentes();
@@ -34,7 +34,7 @@ public class VentanaJuego extends JFrame {
 
     public void panelMenu() {
         JPanel panelPrincipal = new JPanel();
-        panelPrincipal.setSize(700,700);
+        panelPrincipal.setSize(690,700);
         panelPrincipal.setLocation(0,0);
         panelPrincipal.setBackground(Color.BLACK);
         panelPrincipal.setLayout(null);
@@ -80,15 +80,15 @@ public class VentanaJuego extends JFrame {
     }
 
     private class Paneldejuego extends JPanel implements KeyListener {
-        private int squareX = 345;
-        private int squareY = 680;
-        private int squareSpeed = 5;
+        private int coordenadaX = 345;
+        private int coordenadaY = 680;
 
         public Paneldejuego() {
             this.setPreferredSize(new Dimension(700, 700));
             this.addKeyListener(this);
             this.setFocusable(true);
             this.requestFocusInWindow();
+
         }
 
 
@@ -97,22 +97,18 @@ public class VentanaJuego extends JFrame {
             super.paintComponent(g);
             g.setColor(Color.WHITE);
             g.fillRect(x, y, 10, 10);
-
-            g.setColor(Color.RED);
-            g.fillRect(x, y, 50, 50);
         }
-
         @Override
         public void keyPressed(KeyEvent e) {
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_LEFT :
                     if (x > 0) {
-                        x -= speed;
+                        x -= velocidad;
                     }
                     break;
                 case KeyEvent.VK_RIGHT:
                     if (x < 690) {
-                        x += speed;
+                        x += velocidad;
                     }
                     break;
             }
