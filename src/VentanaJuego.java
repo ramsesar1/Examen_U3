@@ -4,6 +4,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 public class VentanaJuego extends JFrame {
 
@@ -61,6 +63,7 @@ public class VentanaJuego extends JFrame {
             jugadorThread.start();
             DisparoThread bulletThread = new DisparoThread(jugadorThread, juegoinicio);
             bulletThread.start();
+            aliensEnemigos enemigosThread = new aliensEnemigos(juegoinicio);
             juegoinicio.requestFocusInWindow();
             repaint();
             revalidate();
@@ -190,4 +193,47 @@ public class VentanaJuego extends JFrame {
             }
         }
     }
+    
+    private static class aliensEnemigos implements Observer {
+    	private Enemigos aliens;
+    	private Navecita nave;
+    	private JPanel panel;
+    	private panel_enemigos iniPanel;
+    	
+        public aliensEnemigos(JPanel panel) {
+        	this.panel=panel;
+        	aliens = new Enemigos();
+        	iniPanel = new panel_enemigos();
+        	panel.add(iniPanel);
+        	
+        	Thread hiloEnemigos = new Thread(aliens);
+        	hiloEnemigos.start();
+        }
+
+        private class panel_enemigos extends JPanel {
+
+            public panel_enemigos() {
+            	setBounds(0,0,700,700);
+            	this.setBackground(Color.black);
+            }
+
+            @Override
+            public void paint(Graphics g) {
+                super.paint(g);
+                //PINTAR ENEMIGOS
+                Navecita[] nave = aliens.getEnemigos();
+                g.setColor(Color.pink);
+                for(int i=0;i<55;i++) {
+                	g.fillRect(nave[i].getPosi_x(), nave[i].getPosi_y(), 25, 25);
+                }
+                //
+            }
+        }
+
+		@Override
+		public void update(Observable o, Object arg) {
+			aliens = (Enemigos) arg;
+		}
+    }
+    
 }
