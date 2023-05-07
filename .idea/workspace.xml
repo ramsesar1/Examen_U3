@@ -5,13 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="274cf6bb-67ea-4718-afed-4053cf0ff7b2" name="Changes" comment="Se añade archivo de prueba para jugador en un thread">
+      <change afterPath="$PROJECT_DIR$/src/Jugador.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Examen U3/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Examen U3/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Examen U3/VentanaJuego$Alien.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Examen U3/VentanaJuego$Aliens.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Examen U3/VentanaJuego$paneljuego.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Examen U3/VentanaJuego.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Examen U3/VentanaJuego.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/PruebaJugadorthread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PruebaJugadorthread.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/VentanaJuego.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/VentanaJuego.java" afterDir="false" />
     </list>
@@ -19,6 +15,9 @@
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeInsightWorkspaceSettings">
+    <option name="optimizeImportsOnTheFly" value="true" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
