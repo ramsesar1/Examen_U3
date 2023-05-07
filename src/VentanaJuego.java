@@ -2,13 +2,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
+import java.util.List;
 
 public class VentanaJuego extends JFrame {
 
     public VentanaJuego() {
         iniciarComponentes();
     }
-    //menu y panel de juego
 
     public void iniciarComponentes() {
         this.setVisible(true);
@@ -56,7 +57,10 @@ public class VentanaJuego extends JFrame {
 
         btnIniciar_Juego.addActionListener(e -> {
             remove(panelPrincipal);
-            new JugadorThread(juegoinicio).start();
+            JugadorThread jugadorThread = new JugadorThread(juegoinicio);
+            jugadorThread.start();
+            DisparoThread bulletThread = new DisparoThread(jugadorThread, juegoinicio);
+            bulletThread.start();
             juegoinicio.requestFocusInWindow();
             repaint();
             revalidate();
@@ -68,6 +72,7 @@ public class VentanaJuego extends JFrame {
 
 
     //thread hilo del jugador
+
     private static class JugadorThread extends Thread implements KeyListener {
         private final JPanel panel;
         private int x = 350;
@@ -86,23 +91,11 @@ public class VentanaJuego extends JFrame {
             panel.add(paneldeljugador);
         }
 
-        @Override
-        public void run() {
-            while (true) {
-                paneldeljugador.repaint();
-                try {
-                    Thread.sleep(16);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+
 
         @Override
         public void keyPressed(KeyEvent e) {
-            switch (e.getKeyCode())
-
-            {
+            switch (e.getKeyCode()) {
                 case KeyEvent.VK_LEFT:
                     x -= velocidad;
                     if (x < 0) x = 0;
@@ -110,9 +103,7 @@ public class VentanaJuego extends JFrame {
                     break;
                 case KeyEvent.VK_RIGHT:
                     x += velocidad;
-                    if (x + paneldeljugador.getWidth() > panel.getWidth()) {
-                        x = panel.getWidth() - paneldeljugador.getWidth();
-                    }
+                    if (x > 690) x = 690;
                     paneldeljugador.setLocation(x, y);
                     break;
             }
@@ -127,12 +118,76 @@ public class VentanaJuego extends JFrame {
 
     private static class PlayerPanel extends JPanel {
         @Override
-        public void paintComponent(Graphics g) {
-            super.paintComponent(g);
+        public void paint(Graphics g) {
+            super.paint(g);
             g.setColor(Color.WHITE);
             g.fillRect(0, 0, 10, 10);
         }
     }
 
+    //hilo thread disparo
 
+    private static class DisparoThread extends Thread {
+        private final JugadorThread jugadorThread;
+        private final JPanel panel;
+        private final List<paneldebalas> balas = new ArrayList<>();
+
+        public DisparoThread(JugadorThread jugadorThread, JPanel panel) {
+            this.jugadorThread = jugadorThread;
+            this.panel = panel;
+        }
+
+
+        private class paneldebalas extends JPanel {
+            private int x;
+            private int y;
+            private int velocidad = 20;
+
+            public paneldebalas(int x, int y) {
+                this.x = x;
+                this.y = y;
+                setBounds(x, y, 2, 10);
+            }
+
+            public void mover() {
+                y -= velocidad;
+                if (y < 0) {
+                    balas.remove(this);
+                    panel.remove(this);
+                } else {
+                    setBounds(x, y, 2, 10);
+                }
+            }
+
+            @Override
+            public void paint(Graphics g) {
+                super.paint(g);
+                g.setColor(Color.YELLOW);
+                g.fillRect(0, 0, 2, 10);
+            }
+        }
+
+        @Override
+        public void run() {
+            while (true) {
+                int x = jugadorThread.x + 5;
+                int y = jugadorThread.y;
+                paneldebalas panelbala = new paneldebalas(x, y);
+                balas.add(panelbala);
+                panel.add(panelbala);
+                panel.repaint();
+
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                for (paneldebalas bullet : balas) {
+                    bullet.mover();
+                }
+                panel.repaint();
+            }
+        }
+    }
 }
