@@ -105,13 +105,13 @@ public class VentanaJuego extends JFrame {
                     x -= velocidad;
                     if (x < 0) x = 0;
                     paneldeljugador.setLocation(x, y);
-                    panel.repaint(); // Add repaint() here
+                    panel.repaint();
                     break;
                 case KeyEvent.VK_RIGHT:
                     x += velocidad;
                     if (x > 690) x = 690;
                     paneldeljugador.setLocation(x, y);
-                    panel.repaint(); // Add repaint() here
+                    panel.repaint();
                     break;
                 case KeyEvent.VK_SPACE:
                     isFiring = true;

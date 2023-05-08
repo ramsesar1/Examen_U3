@@ -4,8 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="274cf6bb-67ea-4718-afed-4053cf0ff7b2" name="Changes" comment="Se hace merge y se el thread de escudos">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="274cf6bb-67ea-4718-afed-4053cf0ff7b2" name="Changes" comment="Se arregla el problema donde el juego no se actualizaba a no ser que estuviera uno spameando botones">
       <change beforePath="$PROJECT_DIR$/out/production/Examen U3/VentanaJuego.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Examen U3/VentanaJuego.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/VentanaJuego.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/VentanaJuego.java" afterDir="false" />
     </list>
@@ -80,7 +79,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683524615762</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Se arregla el problema donde el juego no se actualizaba a no ser que estuviera uno spameando botones">
+      <created>1683537729567</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1683537729567</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -88,7 +94,8 @@
     <MESSAGE value="Se comenta la clase jugador, y se añade la clase dentro de VentanaJuego, los controles del jugador y este mismo ahora estan dentro de un hilo/thread" />
     <MESSAGE value="Se añade el thread de disparos, hay un bug y no deja de disparar, pero thread inicial ya quedo" />
     <MESSAGE value="Se hace merge y se el thread de escudos" />
-    <option name="LAST_COMMIT_MESSAGE" value="Se hace merge y se el thread de escudos" />
+    <MESSAGE value="Se arregla el problema donde el juego no se actualizaba a no ser que estuviera uno spameando botones" />
+    <option name="LAST_COMMIT_MESSAGE" value="Se arregla el problema donde el juego no se actualizaba a no ser que estuviera uno spameando botones" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -100,7 +107,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/VentanaJuego.java</url>
-          <line>312</line>
+          <line>327</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>
