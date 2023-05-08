@@ -5,7 +5,10 @@ import java.awt.event.KeyListener;
 import java.util.Observable;
 import java.util.Observer;
 
+
 public class VentanaJuego extends JFrame {
+
+
 
     public VentanaJuego() {
         iniciarComponentes();
@@ -62,7 +65,6 @@ public class VentanaJuego extends JFrame {
             DisparoThread bulletThread = new DisparoThread(jugadorThread, juegoinicio);
             bulletThread.start();
             EscudoThread shieldThread = new EscudoThread(juegoinicio);
-
             new Thread(shieldThread).start();
             aliensEnemigos enemigosThread = new aliensEnemigos(juegoinicio);
             juegoinicio.requestFocusInWindow();
@@ -82,9 +84,8 @@ public class VentanaJuego extends JFrame {
         private int x = 350;
         private int y = 630;
         private int velocidad = 50;
-        private PlayerPanel paneldeljugador;
+        private paneldejugador paneldeljugador;
         private boolean isFiring = false;
-
 
         public JugadorThread(JPanel panel) {
             this.panel = panel;
@@ -92,12 +93,10 @@ public class VentanaJuego extends JFrame {
             this.panel.setFocusable(true);
             this.panel.requestFocusInWindow();
 
-            paneldeljugador = new PlayerPanel();
+            paneldeljugador = new paneldejugador();
             paneldeljugador.setBounds(x, y, 10, 10);
             panel.add(paneldeljugador);
         }
-
-
 
         @Override
         public void keyPressed(KeyEvent e) {
@@ -106,11 +105,13 @@ public class VentanaJuego extends JFrame {
                     x -= velocidad;
                     if (x < 0) x = 0;
                     paneldeljugador.setLocation(x, y);
+                    panel.repaint(); // Add repaint() here
                     break;
                 case KeyEvent.VK_RIGHT:
                     x += velocidad;
                     if (x > 690) x = 690;
                     paneldeljugador.setLocation(x, y);
+                    panel.repaint(); // Add repaint() here
                     break;
                 case KeyEvent.VK_SPACE:
                     isFiring = true;
@@ -123,23 +124,35 @@ public class VentanaJuego extends JFrame {
 
         @Override
         public void keyReleased(KeyEvent e) {
-
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_SPACE:
+                    System.out.println("baladisparada");
                     isFiring = false;
                     break;
-
             }
-
         }
 
         public boolean isFiring() {
             return isFiring;
         }
+        public void run() {
+            while (true) {
+                paneldeljugador.setLocation(x, y);
+                panel.repaint();
+
+                try {
+                    Thread.sleep(20);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+
 
     }
 
-    private static class PlayerPanel extends JPanel {
+    private static class paneldejugador extends JPanel {
         @Override
         public void paint(Graphics g) {
             super.paint(g);
@@ -147,6 +160,8 @@ public class VentanaJuego extends JFrame {
             g.fillRect(0, 0, 10, 10);
         }
     }
+
+
 
     //hilo thread disparo
 
@@ -223,6 +238,48 @@ public class VentanaJuego extends JFrame {
         }
     }
 
+    //thread de escudos
+    private static class EscudoThread implements Runnable {
+        private final JPanel panel;
+        private Escudo[][] Escudos;
+        private int shieldGap = 80;
+        private int shieldTop = 530;
+
+        public EscudoThread(JPanel panel) {
+            this.panel = panel;
+            Escudos = new Escudo[4][];
+            for (int i = 0; i < 1; i++) {
+                Escudos[i] = new Escudo[4];
+                for (int j = 0; j < 4; j++) {
+                    int x = (j + 1) * shieldGap + j * 80;
+                    int y = shieldTop - (i + 1) * shieldGap - i * 80;
+                    Escudos[i][j] = new Escudo(x, y);
+                    panel.add(Escudos[i][j]);
+                }
+            }
+        }
+
+        @Override
+        public void run() {
+        }
+
+        private static class Escudo extends JPanel {
+            public Escudo(int x, int y) {
+                setBounds(x, y, 80, 80);
+                setBackground(Color.GREEN);
+            }
+        }
+    }
+
+
+
+
+
+
+
+
+
+    //thread hilo aliens
     private static class aliensEnemigos implements Observer {
         private Enemigos aliens;
         private Navecita nave;
@@ -262,41 +319,6 @@ public class VentanaJuego extends JFrame {
         @Override
         public void update(Observable o, Object arg) {
             aliens = (Enemigos) arg;
-        }
-    }
-
-
-
-    //thread de escudos
-    private static class EscudoThread implements Runnable {
-        private final JPanel panel;
-        private Escudo[][] Escudos;
-        private int shieldGap = 80;
-        private int shieldTop = 530;
-
-        public EscudoThread(JPanel panel) {
-            this.panel = panel;
-            Escudos = new Escudo[4][];
-            for (int i = 0; i < 1; i++) {
-                Escudos[i] = new Escudo[4];
-                for (int j = 0; j < 4; j++) {
-                    int x = (j + 1) * shieldGap + j * 80;
-                    int y = shieldTop - (i + 1) * shieldGap - i * 80;
-                    Escudos[i][j] = new Escudo(x, y);
-                    panel.add(Escudos[i][j]);
-                }
-            }
-        }
-
-        @Override
-        public void run() {
-        }
-
-        private static class Escudo extends JPanel {
-            public Escudo(int x, int y) {
-                setBounds(x, y, 80, 80);
-                setBackground(Color.GREEN);
-            }
         }
     }
 
