@@ -1,14 +1,21 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Observable;
 import java.util.Observer;
 
 
 public class VentanaJuego extends JFrame {
 
-
+    public int score=0,hiScore=0;
 
     public VentanaJuego() {
         iniciarComponentes();
@@ -22,7 +29,119 @@ public class VentanaJuego extends JFrame {
         this.setLayout(null);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        panelMenu();
+        Tutorial();
+    }
+
+    public void Tutorial(){
+        JPanel panelTuto = new JPanel();
+        panelTuto.setSize(700, 700);
+        panelTuto.setLocation(0, 0);
+        panelTuto.setBackground(Color.black);
+        panelTuto.setLayout(null);
+        this.add(panelTuto);
+
+        try{
+            BufferedImage flechaI = ImageIO.read(new File("src//Recursos//flechaI.png"));
+            BufferedImage flechaD = ImageIO.read(new File("src//Recursos//flechaD.png"));
+            BufferedImage espacio = ImageIO.read(new File("src//Recursos//espacio.png"));
+        }catch(IOException ex){
+            ex.printStackTrace();
+        }
+
+        try{
+            File file = new File("src//Recursos//flechaI.png");
+            BufferedImage image = ImageIO.read(file);
+            JLabel label = new JLabel(new ImageIcon(image));
+            label.setBounds(440,340,100,100);
+        }catch(IOException a){
+            a.printStackTrace();
+        }
+
+        JLabel etiquetaTitulo = new JLabel("TUTORIAL", JLabel.CENTER);
+        etiquetaTitulo.setFont(new Font("Consolas", Font.BOLD, 30));
+        etiquetaTitulo.setSize(400, 40);
+        etiquetaTitulo.setLocation(150, 100);
+        etiquetaTitulo.setForeground(Color.white);
+        panelTuto.add(etiquetaTitulo);
+
+        JLabel subtituloUno = new JLabel("Sistema de puntos:", JLabel.CENTER);
+        subtituloUno.setFont(new Font("Consolas", Font.BOLD, 20));
+        subtituloUno.setSize(400, 40);
+        subtituloUno.setLocation(0, 200);
+        subtituloUno.setForeground(Color.white);
+        panelTuto.add(subtituloUno);
+
+        JLabel subtituloDos = new JLabel("Controles:", JLabel.CENTER);
+        subtituloDos.setFont(new Font("Consolas", Font.BOLD, 20));
+        subtituloDos.setSize(400, 40);
+        subtituloDos.setLocation(300, 200);
+        subtituloDos.setForeground(Color.white);
+        panelTuto.add(subtituloDos);
+
+        JLabel puntosEnemigos1 = new JLabel("  = ? MYSTERY");
+        puntosEnemigos1.setFont(new Font("Consolas", Font.BOLD, 18));
+        puntosEnemigos1.setSize(200, 40);
+        puntosEnemigos1.setLocation(160, 300);
+        puntosEnemigos1.setForeground(Color.white);
+        panelTuto.add(puntosEnemigos1);
+
+        JLabel puntosEnemigos2 = new JLabel("  = 30 POINTS");
+        puntosEnemigos2.setFont(new Font("Consolas", Font.BOLD, 18));
+        puntosEnemigos2.setSize(200, 40);
+        puntosEnemigos2.setLocation(160, 350);
+        puntosEnemigos2.setForeground(Color.white);
+        panelTuto.add(puntosEnemigos2);
+
+        JLabel puntosEnemigos3 = new JLabel("  = 20 POINTS");
+        puntosEnemigos3.setFont(new Font("Consolas", Font.BOLD, 18));
+        puntosEnemigos3.setSize(200, 40);
+        puntosEnemigos3.setLocation(160, 400);
+        puntosEnemigos3.setForeground(Color.white);
+        panelTuto.add(puntosEnemigos3);
+
+        JLabel puntosEnemigos4 = new JLabel("  = 10 POINTS");
+        puntosEnemigos4.setFont(new Font("Consolas", Font.BOLD, 18));
+        puntosEnemigos4.setSize(200, 40);
+        puntosEnemigos4.setLocation(160, 450);
+        puntosEnemigos4.setForeground(Color.white);
+        panelTuto.add(puntosEnemigos4);
+
+        JLabel controles1 = new JLabel(" Movimieno:");
+        controles1.setFont(new Font("Consolas", Font.BOLD, 18));
+        controles1.setSize(200, 40);
+        controles1.setLocation(440, 300);
+        controles1.setForeground(Color.white);
+        panelTuto.add(controles1);
+
+        JLabel controles2 = new JLabel(" Disparo:");
+        controles2.setFont(new Font("Consolas", Font.BOLD, 18));
+        controles2.setSize(200, 40);
+        controles2.setLocation(440, 410);
+        controles2.setForeground(Color.white);
+        panelTuto.add(controles2);
+
+        JButton btnConitnuar = new JButton("Continuar");
+        btnConitnuar.setFont(new Font("Consolas", Font.BOLD, 20));
+        btnConitnuar.setSize(200, 40);
+        btnConitnuar.setLocation(250, 550);
+        btnConitnuar.setOpaque(true);
+        btnConitnuar.setForeground(Color.white);
+        btnConitnuar.setBackground(Color.black);
+        btnConitnuar.setBorderPainted(false);
+        btnConitnuar.setFocusPainted(false);
+        panelTuto.add(btnConitnuar);
+
+        btnConitnuar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                remove(panelTuto);
+                panelMenu();
+                repaint();
+            }
+
+        });
+        repaint();
+        revalidate();
     }
 
     public void panelMenu() {
@@ -57,6 +176,27 @@ public class VentanaJuego extends JFrame {
         juegoinicio.setBackground(Color.BLUE);
         juegoinicio.setLayout(null);
         this.add(juegoinicio);
+
+        JLabel etiquetaHS = new JLabel("SCORES", JLabel.CENTER);
+        etiquetaHS.setFont(new Font("Consolas", Font.BOLD, 30));
+        etiquetaHS.setSize(400, 40);
+        etiquetaHS.setLocation(150, 300);
+        etiquetaHS.setForeground(Color.white);
+        panelPrincipal.add(etiquetaHS);
+
+        JLabel hScore = new JLabel("BEST SCORE.........."+hiScore, JLabel.CENTER);
+        hScore.setFont(new Font("Consolas", Font.BOLD, 20));
+        hScore.setSize(400, 40);
+        hScore.setLocation(150, 370);
+        hScore.setForeground(Color.white);
+        panelPrincipal.add(hScore);
+
+        JLabel lScore = new JLabel("LAST SCORE.........."+score, JLabel.CENTER);
+        lScore.setFont(new Font("Consolas", Font.BOLD, 20));
+        lScore.setSize(400, 40);
+        lScore.setLocation(150, 450);
+        lScore.setForeground(Color.white);
+        panelPrincipal.add(lScore);
 
         btnIniciar_Juego.addActionListener(e -> {
             remove(panelPrincipal);
@@ -96,6 +236,20 @@ public class VentanaJuego extends JFrame {
             paneldeljugador = new paneldejugador();
             paneldeljugador.setBounds(x, y, 10, 10);
             panel.add(paneldeljugador);
+        }
+
+        public static Font cargarFuente(String ruta){
+            Font fuente = null;
+            InputStream entradaBytes = ClassLoader.class.getResourceAsStream(ruta);
+            try{
+                fuente = Font.createFont(Font.TRUETYPE_FONT,entradaBytes);
+            } catch(FontFormatException e){
+                e.printStackTrace();
+            } catch(IOException e){
+                e.printStackTrace();
+            }
+            fuente = fuente.deriveFont(12f);
+            return fuente;
         }
 
         @Override
