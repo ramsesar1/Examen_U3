@@ -6,7 +6,7 @@ public class Navecita {
 	private boolean vivo;
 	private boolean disparo;
 	private int puntuacion;
-	
+
 	public Navecita(int posi_x,int posi_y) {
 		this.posi_x=posi_x;
 		this.posi_y=posi_y;
@@ -14,7 +14,7 @@ public class Navecita {
 		disparo=false;
 		puntuacion=0;
 	}
-	
+
 	public Navecita(Navecita nave) {
 		this.posi_x = nave.posi_x;
 		this.posi_y = nave.posi_x;
@@ -22,7 +22,7 @@ public class Navecita {
 		this.disparo = nave.disparo;
 		this.puntuacion = nave.puntuacion;
 	}
-	
+
 	//GETTERS AND SETTERS
 	public boolean isVivo() {
 		return vivo;

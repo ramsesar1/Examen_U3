@@ -2,8 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -63,6 +61,9 @@ public class VentanaJuego extends JFrame {
             jugadorThread.start();
             DisparoThread bulletThread = new DisparoThread(jugadorThread, juegoinicio);
             bulletThread.start();
+            EscudoThread shieldThread = new EscudoThread(juegoinicio);
+
+            new Thread(shieldThread).start();
             aliensEnemigos enemigosThread = new aliensEnemigos(juegoinicio);
             juegoinicio.requestFocusInWindow();
             repaint();
@@ -82,6 +83,8 @@ public class VentanaJuego extends JFrame {
         private int y = 630;
         private int velocidad = 50;
         private PlayerPanel paneldeljugador;
+        private boolean isFiring = false;
+
 
         public JugadorThread(JPanel panel) {
             this.panel = panel;
@@ -109,6 +112,9 @@ public class VentanaJuego extends JFrame {
                     if (x > 690) x = 690;
                     paneldeljugador.setLocation(x, y);
                     break;
+                case KeyEvent.VK_SPACE:
+                    isFiring = true;
+                    break;
             }
         }
 
@@ -116,7 +122,21 @@ public class VentanaJuego extends JFrame {
         public void keyTyped(KeyEvent e) {}
 
         @Override
-        public void keyReleased(KeyEvent e) {}
+        public void keyReleased(KeyEvent e) {
+
+            switch (e.getKeyCode()) {
+                case KeyEvent.VK_SPACE:
+                    isFiring = false;
+                    break;
+
+            }
+
+        }
+
+        public boolean isFiring() {
+            return isFiring;
+        }
+
     }
 
     private static class PlayerPanel extends JPanel {
@@ -133,13 +153,17 @@ public class VentanaJuego extends JFrame {
     private static class DisparoThread extends Thread {
         private final JugadorThread jugadorThread;
         private final JPanel panel;
-        private final List<paneldebalas> balas = new ArrayList<>();
+        private paneldebalas bala;
+        private boolean isFiring = false;
 
         public DisparoThread(JugadorThread jugadorThread, JPanel panel) {
             this.jugadorThread = jugadorThread;
             this.panel = panel;
         }
 
+        public boolean isFiring() {
+            return isFiring;
+        }
 
         private class paneldebalas extends JPanel {
             private int x;
@@ -155,66 +179,71 @@ public class VentanaJuego extends JFrame {
             public void mover() {
                 y -= velocidad;
                 if (y < 0) {
-                    balas.remove(this);
-                    panel.remove(this);
+                    remove();
                 } else {
                     setBounds(x, y, 2, 10);
                 }
             }
 
+            public void remove() {
+                panel.remove(this);
+                isFiring = false;
+                bala = null;
+                panel.repaint();
+            }
+
             @Override
             public void paint(Graphics g) {
                 super.paint(g);
-                g.setColor(Color.YELLOW);
+                g.setColor(Color.WHITE);
                 g.fillRect(0, 0, 2, 10);
             }
         }
 
+
         @Override
         public void run() {
             while (true) {
-                int x = jugadorThread.x + 5;
-                int y = jugadorThread.y;
-                paneldebalas panelbala = new paneldebalas(x, y);
-                balas.add(panelbala);
-                panel.add(panelbala);
-                panel.repaint();
+                if (jugadorThread.isFiring() && !isFiring) {
+                    bala = new paneldebalas(jugadorThread.paneldeljugador.getX() + 4, jugadorThread.paneldeljugador.getY() - 10);
+                    panel.add(bala);
+                    isFiring = true;
+                }
+
+                if (isFiring) {
+                    bala.mover();
+                }
 
                 try {
-                    Thread.sleep(500);
+                    Thread.sleep(20);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-
-                for (paneldebalas bullet : balas) {
-                    bullet.mover();
-                }
-                panel.repaint();
             }
         }
     }
-    
+
     private static class aliensEnemigos implements Observer {
-    	private Enemigos aliens;
-    	private Navecita nave;
-    	private JPanel panel;
-    	private panel_enemigos iniPanel;
-    	
+        private Enemigos aliens;
+        private Navecita nave;
+        private JPanel panel;
+        private panel_enemigos iniPanel;
+
         public aliensEnemigos(JPanel panel) {
-        	this.panel=panel;
-        	aliens = new Enemigos();
-        	iniPanel = new panel_enemigos();
-        	panel.add(iniPanel);
-        	
-        	Thread hiloEnemigos = new Thread(aliens);
-        	hiloEnemigos.start();
+            this.panel=panel;
+            aliens = new Enemigos();
+            iniPanel = new panel_enemigos();
+            panel.add(iniPanel);
+
+            Thread hiloEnemigos = new Thread(aliens);
+            hiloEnemigos.start();
         }
 
         private class panel_enemigos extends JPanel {
 
             public panel_enemigos() {
-            	setBounds(0,0,700,700);
-            	this.setBackground(Color.black);
+                setBounds(0,0,700,700);
+                this.setBackground(Color.black);
             }
 
             @Override
@@ -224,16 +253,54 @@ public class VentanaJuego extends JFrame {
                 Navecita[] nave = aliens.getEnemigos();
                 g.setColor(Color.pink);
                 for(int i=0;i<55;i++) {
-                	g.fillRect(nave[i].getPosi_x(), nave[i].getPosi_y(), 25, 25);
+                    g.fillRect(nave[i].getPosi_x(), nave[i].getPosi_y(), 25, 25);
                 }
                 //
             }
         }
 
-		@Override
-		public void update(Observable o, Object arg) {
-			aliens = (Enemigos) arg;
-		}
+        @Override
+        public void update(Observable o, Object arg) {
+            aliens = (Enemigos) arg;
+        }
     }
-    
+
+
+
+    //thread de escudos
+    private static class EscudoThread implements Runnable {
+        private final JPanel panel;
+        private Escudo[][] Escudos;
+        private int shieldGap = 80;
+        private int shieldTop = 530;
+
+        public EscudoThread(JPanel panel) {
+            this.panel = panel;
+            Escudos = new Escudo[4][];
+            for (int i = 0; i < 1; i++) {
+                Escudos[i] = new Escudo[4];
+                for (int j = 0; j < 4; j++) {
+                    int x = (j + 1) * shieldGap + j * 80;
+                    int y = shieldTop - (i + 1) * shieldGap - i * 80;
+                    Escudos[i][j] = new Escudo(x, y);
+                    panel.add(Escudos[i][j]);
+                }
+            }
+        }
+
+        @Override
+        public void run() {
+        }
+
+        private static class Escudo extends JPanel {
+            public Escudo(int x, int y) {
+                setBounds(x, y, 80, 80);
+                setBackground(Color.GREEN);
+            }
+        }
+    }
+
+
+
+
 }
