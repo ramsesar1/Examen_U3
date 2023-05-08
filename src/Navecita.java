@@ -15,6 +15,14 @@ public class Navecita {
 		puntuacion=0;
 	}
 	
+	public Navecita(Navecita nave) {
+		this.posi_x = nave.posi_x;
+		this.posi_y = nave.posi_x;
+		this.vivo = nave.vivo;
+		this.disparo = nave.disparo;
+		this.puntuacion = nave.puntuacion;
+	}
+	
 	//GETTERS AND SETTERS
 	public boolean isVivo() {
 		return vivo;
