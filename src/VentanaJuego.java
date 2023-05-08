@@ -1,12 +1,9 @@
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Observable;
@@ -16,10 +13,12 @@ import java.util.Observer;
 public class VentanaJuego extends JFrame {
 
     public int score=0,hiScore=0;
+    //public static Font fuentepixel = cargarFuente("src//Recursos//fuente.ttf");
 
     public VentanaJuego() {
         iniciarComponentes();
     }
+
 
     public void iniciarComponentes() {
         this.setVisible(true);
@@ -40,22 +39,23 @@ public class VentanaJuego extends JFrame {
         panelTuto.setLayout(null);
         this.add(panelTuto);
 
-        try{
-            BufferedImage flechaI = ImageIO.read(new File("src//Recursos//flechaI.png"));
-            BufferedImage flechaD = ImageIO.read(new File("src//Recursos//flechaD.png"));
-            BufferedImage espacio = ImageIO.read(new File("src//Recursos//espacio.png"));
-        }catch(IOException ex){
-            ex.printStackTrace();
-        }
+        ImageIcon flechaI = new ImageIcon("src//Recursos//flechaI.png");
+        JLabel flechai = new JLabel();
+        flechai.setBounds(430,335,60,60);
+        flechai.setIcon(new ImageIcon(flechaI.getImage().getScaledInstance(60,60,Image.SCALE_SMOOTH)));
+        panelTuto.add(flechai);
 
-        try{
-            File file = new File("src//Recursos//flechaI.png");
-            BufferedImage image = ImageIO.read(file);
-            JLabel label = new JLabel(new ImageIcon(image));
-            label.setBounds(440,340,100,100);
-        }catch(IOException a){
-            a.printStackTrace();
-        }
+        ImageIcon flechaD = new ImageIcon("src//Recursos//flechaD.png");
+        JLabel flechad = new JLabel();
+        flechad.setBounds(515,335,60,60);
+        flechad.setIcon(new ImageIcon(flechaD.getImage().getScaledInstance(60,60,Image.SCALE_SMOOTH)));
+        panelTuto.add(flechad);
+
+        ImageIcon espacio = new ImageIcon("src//Recursos//espacio.png");
+        JLabel espace = new JLabel();
+        espace.setBounds(400,420,200,100);
+        espace.setIcon(new ImageIcon(espacio.getImage().getScaledInstance(200,100,Image.SCALE_SMOOTH)));
+        panelTuto.add(espace);
 
         JLabel etiquetaTitulo = new JLabel("TUTORIAL", JLabel.CENTER);
         etiquetaTitulo.setFont(new Font("Consolas", Font.BOLD, 30));
@@ -109,14 +109,14 @@ public class VentanaJuego extends JFrame {
         JLabel controles1 = new JLabel(" Movimieno:");
         controles1.setFont(new Font("Consolas", Font.BOLD, 18));
         controles1.setSize(200, 40);
-        controles1.setLocation(440, 300);
+        controles1.setLocation(440, 290);
         controles1.setForeground(Color.white);
         panelTuto.add(controles1);
 
         JLabel controles2 = new JLabel(" Disparo:");
         controles2.setFont(new Font("Consolas", Font.BOLD, 18));
         controles2.setSize(200, 40);
-        controles2.setLocation(440, 410);
+        controles2.setLocation(450, 410);
         controles2.setForeground(Color.white);
         panelTuto.add(controles2);
 
@@ -216,6 +216,19 @@ public class VentanaJuego extends JFrame {
         this.revalidate();
     }
 
+    public static Font cargarFuente(String ruta){
+        Font fuente = null;
+        InputStream entradaBytes = ClassLoader.class.getResourceAsStream(ruta);
+        try{
+            fuente = Font.createFont(Font.TRUETYPE_FONT,entradaBytes);
+        } catch(FontFormatException e){
+            e.printStackTrace();
+        } catch(IOException e){
+            e.printStackTrace();
+        }
+        fuente = fuente.deriveFont(12f);
+        return fuente;
+    }
 
     //thread hilo del jugador
 
@@ -236,20 +249,6 @@ public class VentanaJuego extends JFrame {
             paneldeljugador = new paneldejugador();
             paneldeljugador.setBounds(x, y, 10, 10);
             panel.add(paneldeljugador);
-        }
-
-        public static Font cargarFuente(String ruta){
-            Font fuente = null;
-            InputStream entradaBytes = ClassLoader.class.getResourceAsStream(ruta);
-            try{
-                fuente = Font.createFont(Font.TRUETYPE_FONT,entradaBytes);
-            } catch(FontFormatException e){
-                e.printStackTrace();
-            } catch(IOException e){
-                e.printStackTrace();
-            }
-            fuente = fuente.deriveFont(12f);
-            return fuente;
         }
 
         @Override

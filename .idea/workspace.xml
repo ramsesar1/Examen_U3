@@ -5,8 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="274cf6bb-67ea-4718-afed-4053cf0ff7b2" name="Changes" comment="Se arregla el problema donde el juego no se actualizaba a no ser que estuviera uno spameando botones">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Examen U3/VentanaJuego$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Examen U3/VentanaJuego$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Examen U3/VentanaJuego$DisparoThread$paneldebalas.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Examen U3/VentanaJuego$DisparoThread$paneldebalas.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Examen U3/VentanaJuego$DisparoThread.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Examen U3/VentanaJuego$DisparoThread.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Examen U3/VentanaJuego$EscudoThread$Escudo.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Examen U3/VentanaJuego$EscudoThread$Escudo.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Examen U3/VentanaJuego$EscudoThread.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Examen U3/VentanaJuego$EscudoThread.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Examen U3/VentanaJuego$JugadorThread.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Examen U3/VentanaJuego$JugadorThread.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Examen U3/VentanaJuego$aliensEnemigos$panel_enemigos.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Examen U3/VentanaJuego$aliensEnemigos$panel_enemigos.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Examen U3/VentanaJuego$aliensEnemigos.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Examen U3/VentanaJuego$aliensEnemigos.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Examen U3/VentanaJuego$paneldejugador.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Examen U3/VentanaJuego$paneldejugador.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Examen U3/VentanaJuego.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Examen U3/VentanaJuego.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/VentanaJuego.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/VentanaJuego.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -36,16 +45,16 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
@@ -125,7 +134,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/VentanaJuego.java</url>
-          <line>375</line>
+          <line>374</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>
