@@ -4,21 +4,24 @@ import javax.swing.JPanel;
 
 @SuppressWarnings("deprecation")
 public class Enemigos extends Observable implements Runnable {
-	
+		
 	private Navecita[] aliens = new Navecita[55];
+	private Navecita[] comparar = new Navecita[55];
 	
 	public Enemigos() {
 		int posi_y=100, multi=0;
 		for (int i=0;i<aliens.length;i++) {
 			
-			aliens[i] = new Navecita(multi * 60 + 20, posi_y);
+			aliens[i] = new Navecita(multi * 60 + 5, posi_y);
+			comparar[i] = new Navecita(aliens[i]);
 			multi++;
 			
 			if(i==10 || i==21 || i==32 || i==43) {
-				posi_y+=60;
+				posi_y+=40;
 				multi=0;
 			}
 		}
+		
 		
 	}
 	
@@ -38,26 +41,48 @@ public class Enemigos extends Observable implements Runnable {
 
 	@Override
 	public void run() {
-		int aux=0;
+		int aux_x=0;
+		int aux_y=0;
+		int direccion = 1;
 		
 		try {
 			while(!navesDestruidas()) {
-				for (int i=0;i<aliens.length;i++) {
-					if(aliens[i].isVivo()) {
-						aux = aliens[i].getPosi_x()+5;
-						aliens[i].setPosi_x(aux);
-					}
-				}
 				
 				for (int i=0;i<aliens.length;i++) {
-					System.out.println("X: "+aliens[i].getPosi_x()+" Y: "+aliens[i].getPosi_y());
+					if(aliens[i].isVivo()) {
+						if((comparar[i].getPosi_x()+55)>aliens[i].getPosi_x() && direccion==1) {
+							aux_x = aliens[i].getPosi_x()+5;
+							aliens[i].setPosi_x(aux_x);
+							direccion=1;
+							
+						}else {
+							direccion=2;
+							aux_x = aliens[i].getPosi_x()-5;
+							aliens[i].setPosi_x(aux_x);
+							
+						}
+						
+						if ((comparar[i].getPosi_x()+55)==aliens[i].getPosi_x() || comparar[0].getPosi_x()==aliens[0].getPosi_x()){
+							aux_y = aliens[i].getPosi_y()+25;
+							aliens[i].setPosi_y(aux_y);
+						}
+						
+					}
+					
+					
 				}
+				if (comparar[0].getPosi_x()==aliens[0].getPosi_x()) {
+					direccion=1;
+				}
+				
+				
+				
 			
 				this.setChanged();
 				this.notifyObservers(aliens);
 				this.clearChanged();
 				
-				Thread.sleep(1000);
+				Thread.sleep(700);
 				
 			}
 		} catch (InterruptedException e) {
