@@ -6,9 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="274cf6bb-67ea-4718-afed-4053cf0ff7b2" name="Changes" comment="Se arregla el problema donde el juego no se actualizaba a no ser que estuviera uno spameando botones">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Examen U3/Enemigos.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Examen U3/Navecita.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Examen U3/VentanaJuego$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Examen U3/VentanaJuego$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Examen U3/VentanaJuego$AlienThread.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Examen U3/VentanaJuego$AlienThread.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Examen U3/VentanaJuego$DisparoThread$paneldebalas.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Examen U3/VentanaJuego$DisparoThread$paneldebalas.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Examen U3/VentanaJuego$DisparoThread.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Examen U3/VentanaJuego$DisparoThread.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Examen U3/VentanaJuego$EscudoThread$Escudo.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Examen U3/VentanaJuego$EscudoThread$Escudo.class" afterDir="false" />
@@ -16,6 +15,14 @@
       <change beforePath="$PROJECT_DIR$/out/production/Examen U3/VentanaJuego$JugadorThread.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Examen U3/VentanaJuego$JugadorThread.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Examen U3/VentanaJuego$paneldejugador.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Examen U3/VentanaJuego$paneldejugador.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Examen U3/VentanaJuego.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Examen U3/VentanaJuego.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Recursos/nave11.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Recursos/nave21.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Recursos/nave31.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Recursos/naveR.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SonidosJuego/Audio_Destruccion2.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SonidosJuego/Audio_Destruccion3.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SonidosJuego/Audio_disparoLaser1.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SonidosJuego/Audio_disparoLaser2.wav" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/VentanaJuego.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/VentanaJuego.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -132,12 +139,12 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/VentanaJuego.java</url>
-          <line>157</line>
+          <line>163</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/VentanaJuego.java</url>
-          <line>407</line>
+          <line>417</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>

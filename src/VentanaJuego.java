@@ -12,12 +12,8 @@ import java.io.InputStream;
 public class VentanaJuego extends JFrame {
 
     public int score = 0, hiScore = 0;
-    private Sonido disparo_1;//VARIABLE GLOBAL PARA REPRODUCIR EL AUDIO
-    private Sonido disparo_2;
-    private Sonido disparo_3;
-    private Sonido destruccion_1;
-    private Sonido destruccion_2;
-    private Sonido destruccion_3;
+    private static Sonido disparoSonido = new Sonido("src/SonidosJuego/Audio_disparoLaser3.wav");
+    private static Sonido destruccionSonido;
     //public static Font fuentepixel = cargarFuente("src//Recursos//fuente.ttf");
 
     private static int filas = 5;
@@ -49,7 +45,25 @@ public class VentanaJuego extends JFrame {
         this.add(panelTuto);
         
         cargarSonido();//LLAMAR AL METODO QUE CARGA EL AUDIO
-        
+
+        ImageIcon Nave1 = new ImageIcon("src//Recursos//nave1.png");
+        JLabel nave1 = new JLabel();
+        nave1.setBounds(90, 300, 80, 60);
+        nave1.setIcon(new ImageIcon(Nave1.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH)));
+        panelTuto.add(nave1);
+
+        ImageIcon Nave2 = new ImageIcon("src//Recursos//nave2.png");
+        JLabel nave2 = new JLabel();
+        nave2.setBounds(88, 370, 80, 60);
+        nave2.setIcon(new ImageIcon(Nave2.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH)));
+        panelTuto.add(nave2);
+
+        ImageIcon Nave3 = new ImageIcon("src//Recursos//nave3.png");
+        JLabel nave3 = new JLabel();
+        nave3.setBounds(85, 440, 80, 60);
+        nave3.setIcon(new ImageIcon(Nave3.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH)));
+        panelTuto.add(nave3);
+
         ImageIcon flechaI = new ImageIcon("src//Recursos//flechaI.png");
         JLabel flechai = new JLabel();
         flechai.setBounds(430, 335, 60, 60);
@@ -89,33 +103,26 @@ public class VentanaJuego extends JFrame {
         subtituloDos.setForeground(Color.white);
         panelTuto.add(subtituloDos);
 
-        JLabel puntosEnemigos1 = new JLabel("  = ? MYSTERY");
+        JLabel puntosEnemigos1 = new JLabel("  = 30 POINTS");
         puntosEnemigos1.setFont(new Font("Consolas", Font.BOLD, 18));
         puntosEnemigos1.setSize(200, 40);
-        puntosEnemigos1.setLocation(160, 300);
+        puntosEnemigos1.setLocation(160, 310);
         puntosEnemigos1.setForeground(Color.white);
         panelTuto.add(puntosEnemigos1);
 
-        JLabel puntosEnemigos2 = new JLabel("  = 30 POINTS");
+        JLabel puntosEnemigos2 = new JLabel("  = 20 POINTS");
         puntosEnemigos2.setFont(new Font("Consolas", Font.BOLD, 18));
         puntosEnemigos2.setSize(200, 40);
-        puntosEnemigos2.setLocation(160, 350);
+        puntosEnemigos2.setLocation(160, 380);
         puntosEnemigos2.setForeground(Color.white);
         panelTuto.add(puntosEnemigos2);
 
-        JLabel puntosEnemigos3 = new JLabel("  = 20 POINTS");
+        JLabel puntosEnemigos3 = new JLabel("  = 10 POINTS");
         puntosEnemigos3.setFont(new Font("Consolas", Font.BOLD, 18));
         puntosEnemigos3.setSize(200, 40);
-        puntosEnemigos3.setLocation(160, 400);
+        puntosEnemigos3.setLocation(160, 450);
         puntosEnemigos3.setForeground(Color.white);
         panelTuto.add(puntosEnemigos3);
-
-        JLabel puntosEnemigos4 = new JLabel("  = 10 POINTS");
-        puntosEnemigos4.setFont(new Font("Consolas", Font.BOLD, 18));
-        puntosEnemigos4.setSize(200, 40);
-        puntosEnemigos4.setLocation(160, 450);
-        puntosEnemigos4.setForeground(Color.white);
-        panelTuto.add(puntosEnemigos4);
 
         JLabel controles1 = new JLabel(" Movimieno:");
         controles1.setFont(new Font("Consolas", Font.BOLD, 18));
@@ -146,7 +153,6 @@ public class VentanaJuego extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 remove(panelTuto);
-                disparo_3.play();//PRUEBA DE AUDIO
                 panelMenu();
                 repaint();
             }
@@ -185,7 +191,7 @@ public class VentanaJuego extends JFrame {
         JPanel juegoinicio = new JPanel();
         juegoinicio.setSize(700, 700);
         juegoinicio.setLocation(0, 0);
-        juegoinicio.setBackground(Color.BLUE);
+        juegoinicio.setBackground(Color.BLACK);
         juegoinicio.setLayout(null);
         this.add(juegoinicio);
 
@@ -242,15 +248,11 @@ public class VentanaJuego extends JFrame {
         fuente = fuente.deriveFont(12f);
         return fuente;
     }
-    
+
     public void cargarSonido() {//FUNCION PARA CARGAR AUDIO
     	try {
-    		disparo_1 = new Sonido("src/SonidosJuego/Audio_disparoLaser1.wav");
-    		disparo_2 = new Sonido("src/SonidosJuego/Audio_disparoLaser2.wav");
-    		disparo_3 = new Sonido("src/SonidosJuego/Audio_disparoLaser3.wav");
-    		destruccion_1 = new Sonido("src/SonidosJuego/Audio_Destruccion1.wav");
-    		destruccion_2 = new Sonido("src/SonidosJuego/Audio_Destruccion1.wav");
-    		destruccion_3 = new Sonido("src/SonidosJuego/Audio_Destruccion1.wav");
+    		disparoSonido = new Sonido("src/SonidosJuego/Audio_disparoLaser3.wav");
+    		destruccionSonido = new Sonido("src/SonidosJuego/Audio_Destruccion1.wav");
     	}catch (Exception e) {
 			System.err.println("No encontro el archivo de audio");
 		}
@@ -293,6 +295,7 @@ public class VentanaJuego extends JFrame {
                     break;
                 case KeyEvent.VK_SPACE:
                     isFiring = true;
+                    disparoSonido.play();
                     break;
             }
         }
@@ -374,8 +377,15 @@ public class VentanaJuego extends JFrame {
                 for(int i=0;i<5;i++){
                     for(int j=0;j<11;j++){
                         if(x>aliens[i][j].getX() && x<aliens[i][j].getX()+55 && y>aliens[i][j].getY() && y<aliens[i][j].getY()+55 && aliens[i][j].isVisible()==true){
+                            destruccionSonido.play();//PRUEBA DE AUDIO
                             aliens[i][j].setVisible(false);
                             remove();
+                            try {
+                                Thread.sleep(700);
+                            } catch (InterruptedException ex) {
+                                throw new RuntimeException(ex);
+                            }
+                            destruccionSonido.stop();
                         }
                     }
                 }
@@ -472,7 +482,7 @@ public class VentanaJuego extends JFrame {
                 for (int j = 0; j < columnas; j++) {
                     JPanel alienPanel = new JPanel();
                     alienPanel.setBounds(x0 + j * espacio, y0 + i * espacio, 40, 40);
-                    alienPanel.setBackground(Color.GREEN);
+                    alienPanel.setBackground(Color.WHITE);
                     aliens[i][j] = alienPanel;
                     panel.add(alienPanel);
                 }
