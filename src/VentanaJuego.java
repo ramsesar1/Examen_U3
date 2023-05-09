@@ -1,16 +1,11 @@
 import javax.swing.*;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.Collections;
 
 
 public class VentanaJuego extends JFrame {
@@ -257,19 +252,7 @@ public class VentanaJuego extends JFrame {
     	}
     }
 
-    public static Font cargarFuente(String ruta) {
-        Font fuente = null;
-        InputStream entradaBytes = ClassLoader.class.getResourceAsStream(ruta);
-        try {
-            fuente = Font.createFont(Font.TRUETYPE_FONT, entradaBytes);
-        } catch (FontFormatException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        fuente = fuente.deriveFont(12f);
-        return fuente;
-    }
+   
 
     public void cargarSonido() {//FUNCION PARA CARGAR AUDIO
     	try {
@@ -280,7 +263,7 @@ public class VentanaJuego extends JFrame {
 			System.err.println("No encontro el archivo de audio");
 		}
 	 }
-    
+
     //thread hilo del jugador
     private static class JugadorThread extends Thread implements KeyListener {
     	private final JPanel panel;
@@ -607,11 +590,42 @@ public class VentanaJuego extends JFrame {
             aliens = new JPanel[filas][columnas];
             for (int i = 0; i < filas; i++) {
                 for (int j = 0; j < columnas; j++) {
-                    JPanel alienPanel = new JPanel();
-                    alienPanel.setBounds(x0 + j * espacio, y0 + i * espacio, 40, 40);
-                    alienPanel.setBackground(Color.WHITE);
-                    aliens[i][j] = alienPanel;
-                    panel.add(alienPanel);
+                    if(i==0){
+                        ImageIcon nave1 = new ImageIcon("src//Recursos//nave1.png");
+                        JPanel alienPanel = new JPanel();
+                        alienPanel.setBounds(x0 + j * espacio, y0 + i * espacio, 40, 40);
+                        JLabel label = new JLabel();
+                        alienPanel.setBackground(Color.BLACK);
+                        label.setBounds(x0 + j * espacio, y0 + i * espacio, 40, 40);
+                        label.setIcon(new ImageIcon(nave1.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH)));
+                        alienPanel.add(label);
+                        aliens[i][j] = alienPanel;
+                        panel.add(alienPanel);
+                    }
+                    if(i==1 || i==2){
+                        ImageIcon nave2 = new ImageIcon("src//Recursos//nave2.png");
+                        JPanel alienPanel = new JPanel();
+                        alienPanel.setBounds(x0 + j * espacio, y0 + i * espacio, 40, 40);
+                        JLabel label = new JLabel();
+                        alienPanel.setBackground(Color.BLACK);
+                        label.setBounds(x0 + j * espacio, y0 + i * espacio, 40, 40);
+                        label.setIcon(new ImageIcon(nave2.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH)));
+                        alienPanel.add(label);
+                        aliens[i][j] = alienPanel;
+                        panel.add(alienPanel);
+                    }
+                    if(i==3 || i==4){
+                        ImageIcon nave3 = new ImageIcon("src//Recursos//nave3.png");
+                        JPanel alienPanel = new JPanel();
+                        alienPanel.setBounds(x0 + j * espacio, y0 + i * espacio, 40, 40);
+                        JLabel label = new JLabel();
+                        alienPanel.setBackground(Color.BLACK);
+                        label.setBounds(x0 + j * espacio, y0 + i * espacio, 40, 40);
+                        label.setIcon(new ImageIcon(nave3.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH)));
+                        alienPanel.add(label);
+                        aliens[i][j] = alienPanel;
+                        panel.add(alienPanel);
+                    }
                 }
             }
         }
