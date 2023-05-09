@@ -16,8 +16,10 @@ import java.util.ArrayList;
 public class VentanaJuego extends JFrame {
 
     public int score = 0, hiScore = 0;
-    private static Sonido disparoSonido = new Sonido("src/SonidosJuego/Audio_disparoLaser3.wav");
+    private static Sonido disparoSonido;
+    private static Sonido disparoSonido_Enemigos;
     private static Sonido destruccionSonido;
+    private static boolean gameOver;
     //public static Font fuentepixel = cargarFuente("src//Recursos//fuente.ttf");
 
     private static int filas = 5;
@@ -36,6 +38,7 @@ public class VentanaJuego extends JFrame {
         this.setLocationRelativeTo(null);
         this.setLayout(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        gameOver = false;
 
         Tutorial();
     }
@@ -221,6 +224,7 @@ public class VentanaJuego extends JFrame {
         panelPrincipal.add(lScore);
 
         btnIniciar_Juego.addActionListener(e -> {
+        	gameOver=false;
             remove(panelPrincipal);
             JugadorThread jugadorThread = new JugadorThread(juegoinicio);
             jugadorThread.start();
@@ -234,9 +238,16 @@ public class VentanaJuego extends JFrame {
             repaint();
             revalidate();
         });
-
+        
         this.repaint();
         this.revalidate();
+    }
+    
+    public void juegoTerminado(JPanel panelActual) {
+    	if (gameOver) {
+    		remove(panelActual);
+    		panelMenu();
+    	}
     }
 
     public static Font cargarFuente(String ruta) {
@@ -257,6 +268,7 @@ public class VentanaJuego extends JFrame {
     	try {
     		disparoSonido = new Sonido("src/SonidosJuego/Audio_disparoLaser3.wav");
     		destruccionSonido = new Sonido("src/SonidosJuego/Audio_Destruccion1.wav");
+    		disparoSonido_Enemigos = new Sonido("src/SonidosJuego/Audio_disparoLaser1.wav");
     	}catch (Exception e) {
 			System.err.println("No encontro el archivo de audio");
 		}
@@ -324,7 +336,7 @@ public class VentanaJuego extends JFrame {
         }
 
         public void run() {
-            while (true) {
+            while (!gameOver) {
                 paneldeljugador.setLocation(x, y);
                 panel.repaint();
 
@@ -419,7 +431,7 @@ public class VentanaJuego extends JFrame {
 
         @Override
         public void run() {
-            while (true) {
+            while (!gameOver) {
                 if (jugadorThread.isFiring() && !isFiring) {
                     bala = new paneldebalas(jugadorThread.paneldeljugador.getX() + 4, jugadorThread.paneldeljugador.getY() - 10);
                     panel.add(bala);
@@ -536,10 +548,10 @@ public class VentanaJuego extends JFrame {
 
         @Override
         public void run() {
-            while (true) {
+            while (!gameOver) {
             	
                 if (!isFiring && panelAlien!=null) {
-                    bala = new paneldebala(panelAlien.getX()+20,panelAlien.getY()+20);//necesita que le lleguen las cordenadas 
+                    bala = new paneldebala(panelAlien.getX()+20,panelAlien.getY()+20);//necesita que le lleguen las cordenadas
                     panel.add(bala);
                     isFiring = true;
                 }
@@ -589,7 +601,8 @@ public class VentanaJuego extends JFrame {
         public void run() {
             int dx = 1;
             int dy = 0;
-            while (true) {
+            int contadorMuertos = 0;
+            while (!gameOver) {
                 try {
                     Thread.sleep(50);
                 } catch (InterruptedException e) {
@@ -598,19 +611,29 @@ public class VentanaJuego extends JFrame {
                 
                 if (!bulletEnemy.isFiring) {//COMPRUEBA SI NO HAY BALA EN PANTALLA
                 	lista.clear();
+                	contadorMuertos = 0;
                 	for (int i = 0; i < filas; i++) {
                         for (int j = 0; j < columnas; j++) {
                         	if (aliens[i][j].isVisible()) {//SI EL PANEL SIGUE VISIBLE(VIVO) LO AÑADE A UNA LISTA DE LOS CAMDIDATOS PARA DISPARAR
                         		aux = aliens[i][j];
                         		lista.add(aux);
+                        	}else {
+                        		contadorMuertos++;
                         	}
                       }
                 	}
                 }else {
                 }
                 
-                Collections.shuffle(lista);
-                bulletEnemy.obtenerAlien(lista.get(0));
+                if (contadorMuertos==55) {
+                	JOptionPane.showMessageDialog(null,"¡¡Ha ganado!!","Fin del juego",JOptionPane.INFORMATION_MESSAGE);
+                	gameOver=true;
+                	juegoTerminado(panel);
+                }else {
+                	Collections.shuffle(lista);
+                	bulletEnemy.obtenerAlien(lista.get(0));
+                }
+                
                 
                 x0 += dx;
                 y0 += dy;
