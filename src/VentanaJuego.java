@@ -15,7 +15,8 @@ import java.util.ArrayList;
 
 public class VentanaJuego extends JFrame {
 
-    public int score = 0, hiScore = 0;
+    public static int score = 0;
+	public int hiScore = 0;
     private static Sonido disparoSonido;
     private static Sonido disparoSonido_Enemigos;
     private static Sonido destruccionSonido;
@@ -25,6 +26,7 @@ public class VentanaJuego extends JFrame {
     private static int filas = 5;
     private static int columnas = 11;
     private static JPanel[][] aliens = new JPanel[filas][columnas];
+    private static JPanel panelAux;
 
     public VentanaJuego() {
         iniciarComponentes();
@@ -162,6 +164,11 @@ public class VentanaJuego extends JFrame {
                 remove(panelTuto);
                 panelMenu();
                 repaint();
+                
+                if (hiScore < score) {
+                	hiScore=score;
+                }
+                
             }
 
         });
@@ -276,10 +283,10 @@ public class VentanaJuego extends JFrame {
     
     //thread hilo del jugador
     private static class JugadorThread extends Thread implements KeyListener {
-        private final JPanel panel;
+    	private final JPanel panel;
         private int x = 350;
         private int y = 630;
-        private int velocidad = 50;
+        private int velocidad = 25;
         private paneldejugador paneldeljugador;
         private boolean isFiring = false;
 
@@ -290,8 +297,9 @@ public class VentanaJuego extends JFrame {
             this.panel.requestFocusInWindow();
 
             paneldeljugador = new paneldejugador();
-            paneldeljugador.setBounds(x, y, 10, 10);
+            paneldeljugador.setBounds(x, y, 30, 10);
             panel.add(paneldeljugador);
+            panelAux = paneldeljugador;
         }
 
         @Override
@@ -337,11 +345,11 @@ public class VentanaJuego extends JFrame {
 
         public void run() {
             while (!gameOver) {
-                paneldeljugador.setLocation(x, y);
+                paneldeljugador.setBounds(x, y, 30,10);
                 panel.repaint();
 
                 try {
-                    Thread.sleep(20);
+                    Thread.sleep(10);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -394,15 +402,19 @@ public class VentanaJuego extends JFrame {
                 for(int i=0;i<5;i++){
                     for(int j=0;j<11;j++){
                         if(x>aliens[i][j].getX() && x<aliens[i][j].getX()+55 && y>aliens[i][j].getY() && y<aliens[i][j].getY()+55 && aliens[i][j].isVisible()==true){
-                            destruccionSonido.play();//PRUEBA DE AUDIO
+                            destruccionSonido.play();
                             aliens[i][j].setVisible(false);
                             remove();
-                            try {
-                                Thread.sleep(700);
-                            } catch (InterruptedException ex) {
-                                throw new RuntimeException(ex);
-                            }
                             destruccionSonido.stop();
+                            
+                            if (i==0) {
+                            	score+=30;
+                            } else if(i==1 && i==2) {
+                            	score+=20;
+                            }else {
+                            	score+=10;
+                            }
+                            
                         }
                     }
                 }
@@ -433,7 +445,7 @@ public class VentanaJuego extends JFrame {
         public void run() {
             while (!gameOver) {
                 if (jugadorThread.isFiring() && !isFiring) {
-                    bala = new paneldebalas(jugadorThread.paneldeljugador.getX() + 4, jugadorThread.paneldeljugador.getY() - 10);
+                    bala = new paneldebalas(jugadorThread.paneldeljugador.getX() + 14, jugadorThread.paneldeljugador.getY() - 10);
                     panel.add(bala);
                     isFiring = true;
                 }
@@ -522,6 +534,13 @@ public class VentanaJuego extends JFrame {
 
             public void mover() {
             	y += velocidad;
+            	
+            	if(x>panelAux.getX() && x<panelAux.getX()+30 && y>panelAux.getY() && y<panelAux.getY()+10){
+                    destruccionSonido.play();
+                    destruccionSonido.stop();
+                    remove();
+                    ////////////////////////////////////////////////////////////////////////////////////////////////////////
+                }
             	
             	if (y > 700) {
                     remove();
