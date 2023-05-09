@@ -467,16 +467,105 @@ public class VentanaJuego extends JFrame {
         }
     }
 
+    private static class DisparoEnemigoThread extends Thread {
+        private AlienThread alien;
+        private JPanel panel;
+        private JPanel panelAlien;
+        private paneldebala bala;
+        private boolean isFiring = false;
+        private JPanel nave;
+
+        public DisparoEnemigoThread(AlienThread alien, JPanel panel) {
+            this.alien = alien;
+            this.panel = panel;
+        }
+
+        public void setFiring(boolean isFiring) {
+			this.isFiring = isFiring;
+		}
+
+		public boolean isFiring() {
+            return isFiring;
+        }
+        
+        public void obtenerAlien(JPanel panel) {
+        	panelAlien = panel;
+        }
+
+        private class paneldebala extends JPanel {
+            private int x;
+            private int y;
+            private int velocidad = 20;
+
+            public paneldebala(int x, int y) {
+            	this.x=x;
+            	this.y=y;
+            	setBounds(x, y, 2, 10);
+            }
+
+            public void mover() {
+            	y += velocidad;
+            	
+            	if (y > 700) {
+                    remove();
+                } else {
+                    setBounds(x,y, 2, 10);
+                }
+            }
+
+            public void remove() {
+                panel.remove(this);
+                isFiring = false;
+                bala = null;
+                panel.repaint();
+            }
+
+            @Override
+            public void paint(Graphics g) {
+                super.paint(g);
+                g.setColor(Color.WHITE);
+                g.fillRect(0, 0, 2, 10);
+            }
+        }
+
+
+        @Override
+        public void run() {
+            while (true) {
+            	
+                if (!isFiring && panelAlien!=null) {
+                    bala = new paneldebala(panelAlien.getX(),panelAlien.getY());//necesita que le lleguen las cordenadas 
+                    panel.add(bala);
+                    isFiring = true;
+                }
+
+                if (isFiring) {
+                    bala.mover();
+                }
+
+                try {
+                    Thread.sleep(20);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 
     //thread hilo aliens
     public class AlienThread extends Thread {
         private JPanel panel;
+        private JPanel aux;
+        private DisparoEnemigoThread bulletEnemy;
         private int x0 = 25;
         private int y0 = 25;
         private int espacio = 55;
 
         public AlienThread(JPanel panel) {
             this.panel = panel;
+            bulletEnemy = new DisparoEnemigoThread(this,this.panel);
+            Thread hilo = new Thread(bulletEnemy);
+            hilo.start();
             aliens = new JPanel[filas][columnas];
             for (int i = 0; i < filas; i++) {
                 for (int j = 0; j < columnas; j++) {
@@ -499,6 +588,22 @@ public class VentanaJuego extends JFrame {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                
+                if (!bulletEnemy.isFiring) {//COMPRUEBA SI NO HAY BALA EN PANTALLA
+                	for (int i = 0; i < filas; i++) {
+                        for (int j = 0; j < columnas; j++) {
+                        	if (aliens[i][j].isVisible()) {//SI EL PANEL SIGUE VISIBLE(VIVO) LO AÑADE A UNA LISTA DE LOS CAMDIDATOS PARA DISPARAR
+                        		aux = aliens[i][j];// aqui es donde entra cuando encuentra un alien vivo y disponible
+                        		System.out.println("cambia de alien");
+                        		bulletEnemy.obtenerAlien(aux);
+                        		System.out.println("hola");
+                        	}
+                      }
+                	}
+                }else {
+                	
+                }
+                
                 x0 += dx;
                 y0 += dy;
                 if (x0 < 0 || x0 + columnas * espacio > panel.getWidth()) {
