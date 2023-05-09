@@ -1,3 +1,4 @@
+/*
 import java.util.Observable;
 
 @SuppressWarnings("deprecation")
@@ -31,6 +32,8 @@ public class Enemigos extends Observable implements Runnable {
     public Navecita[] getEnemigos() {
         return aliens;
     }
+
+
 
     public void setEnemigos(Navecita[] enemigos) {
         this.aliens = enemigos;
@@ -107,3 +110,5 @@ public class Enemigos extends Observable implements Runnable {
     }
 
 }
+
+     */

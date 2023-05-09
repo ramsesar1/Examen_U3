@@ -1,4 +1,4 @@
-
+/*
 public class Navecita {
 
 	private int posi_x;
@@ -66,3 +66,5 @@ public class Navecita {
 	//
 
 }
+
+ */

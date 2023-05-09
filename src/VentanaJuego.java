@@ -6,13 +6,11 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Observable;
-import java.util.Observer;
 
 
 public class VentanaJuego extends JFrame {
 
-    public int score=0,hiScore=0;
+    public int score = 0, hiScore = 0;
     //public static Font fuentepixel = cargarFuente("src//Recursos//fuente.ttf");
 
     public VentanaJuego() {
@@ -31,7 +29,7 @@ public class VentanaJuego extends JFrame {
         Tutorial();
     }
 
-    public void Tutorial(){
+    public void Tutorial() {
         JPanel panelTuto = new JPanel();
         panelTuto.setSize(700, 700);
         panelTuto.setLocation(0, 0);
@@ -41,20 +39,20 @@ public class VentanaJuego extends JFrame {
 
         ImageIcon flechaI = new ImageIcon("src//Recursos//flechaI.png");
         JLabel flechai = new JLabel();
-        flechai.setBounds(430,335,60,60);
-        flechai.setIcon(new ImageIcon(flechaI.getImage().getScaledInstance(60,60,Image.SCALE_SMOOTH)));
+        flechai.setBounds(430, 335, 60, 60);
+        flechai.setIcon(new ImageIcon(flechaI.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH)));
         panelTuto.add(flechai);
 
         ImageIcon flechaD = new ImageIcon("src//Recursos//flechaD.png");
         JLabel flechad = new JLabel();
-        flechad.setBounds(515,335,60,60);
-        flechad.setIcon(new ImageIcon(flechaD.getImage().getScaledInstance(60,60,Image.SCALE_SMOOTH)));
+        flechad.setBounds(515, 335, 60, 60);
+        flechad.setIcon(new ImageIcon(flechaD.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH)));
         panelTuto.add(flechad);
 
         ImageIcon espacio = new ImageIcon("src//Recursos//espacio.png");
         JLabel espace = new JLabel();
-        espace.setBounds(400,420,200,100);
-        espace.setIcon(new ImageIcon(espacio.getImage().getScaledInstance(200,100,Image.SCALE_SMOOTH)));
+        espace.setBounds(400, 420, 200, 100);
+        espace.setIcon(new ImageIcon(espacio.getImage().getScaledInstance(200, 100, Image.SCALE_SMOOTH)));
         panelTuto.add(espace);
 
         JLabel etiquetaTitulo = new JLabel("TUTORIAL", JLabel.CENTER);
@@ -184,14 +182,14 @@ public class VentanaJuego extends JFrame {
         etiquetaHS.setForeground(Color.white);
         panelPrincipal.add(etiquetaHS);
 
-        JLabel hScore = new JLabel("BEST SCORE.........."+hiScore, JLabel.CENTER);
+        JLabel hScore = new JLabel("BEST SCORE.........." + hiScore, JLabel.CENTER);
         hScore.setFont(new Font("Consolas", Font.BOLD, 20));
         hScore.setSize(400, 40);
         hScore.setLocation(150, 370);
         hScore.setForeground(Color.white);
         panelPrincipal.add(hScore);
 
-        JLabel lScore = new JLabel("LAST SCORE.........."+score, JLabel.CENTER);
+        JLabel lScore = new JLabel("LAST SCORE.........." + score, JLabel.CENTER);
         lScore.setFont(new Font("Consolas", Font.BOLD, 20));
         lScore.setSize(400, 40);
         lScore.setLocation(150, 450);
@@ -206,7 +204,8 @@ public class VentanaJuego extends JFrame {
             bulletThread.start();
             EscudoThread shieldThread = new EscudoThread(juegoinicio);
             new Thread(shieldThread).start();
-            aliensEnemigos enemigosThread = new aliensEnemigos(juegoinicio);
+            AlienThread alienThread = new AlienThread(juegoinicio);
+            alienThread.start();
             juegoinicio.requestFocusInWindow();
             repaint();
             revalidate();
@@ -216,14 +215,14 @@ public class VentanaJuego extends JFrame {
         this.revalidate();
     }
 
-    public static Font cargarFuente(String ruta){
+    public static Font cargarFuente(String ruta) {
         Font fuente = null;
         InputStream entradaBytes = ClassLoader.class.getResourceAsStream(ruta);
-        try{
-            fuente = Font.createFont(Font.TRUETYPE_FONT,entradaBytes);
-        } catch(FontFormatException e){
+        try {
+            fuente = Font.createFont(Font.TRUETYPE_FONT, entradaBytes);
+        } catch (FontFormatException e) {
             e.printStackTrace();
-        } catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
         fuente = fuente.deriveFont(12f);
@@ -273,7 +272,8 @@ public class VentanaJuego extends JFrame {
         }
 
         @Override
-        public void keyTyped(KeyEvent e) {}
+        public void keyTyped(KeyEvent e) {
+        }
 
         @Override
         public void keyReleased(KeyEvent e) {
@@ -288,6 +288,7 @@ public class VentanaJuego extends JFrame {
         public boolean isFiring() {
             return isFiring;
         }
+
         public void run() {
             while (true) {
                 paneldeljugador.setLocation(x, y);
@@ -302,7 +303,6 @@ public class VentanaJuego extends JFrame {
         }
 
 
-
     }
 
     private static class paneldejugador extends JPanel {
@@ -313,7 +313,6 @@ public class VentanaJuego extends JFrame {
             g.fillRect(0, 0, 10, 10);
         }
     }
-
 
 
     //hilo thread disparo
@@ -425,57 +424,55 @@ public class VentanaJuego extends JFrame {
     }
 
 
-
-
-
-
-
-
-
     //thread hilo aliens
-    private static class aliensEnemigos implements Observer {
-        private Enemigos aliens;
-        private Navecita nave;
+    public class AlienThread extends Thread {
         private JPanel panel;
-        private panel_enemigos iniPanel;
+        private int filas = 5;
+        private int columnas = 11;
+        private int x0 = 25;
+        private int y0 = 25;
+        private int espacio = 55;
+        private JPanel[][] aliens;
 
-        public aliensEnemigos(JPanel panel) {
-            this.panel=panel;
-            aliens = new Enemigos();
-            iniPanel = new panel_enemigos();
-            panel.add(iniPanel);
-
-            Thread hiloEnemigos = new Thread(aliens);
-            hiloEnemigos.start();
-        }
-
-        private class panel_enemigos extends JPanel {
-
-            public panel_enemigos() {
-                setBounds(0,0,700,700);
-                this.setBackground(Color.black);
-            }
-
-            @Override
-            public void paint(Graphics g) {
-                super.paint(g);
-                //PINTAR ENEMIGOS
-                Navecita[] nave = aliens.getEnemigos();
-                g.setColor(Color.pink);
-                for(int i=0;i<55;i++) {
-                    g.fillRect(nave[i].getPosi_x(), nave[i].getPosi_y(), 25, 25);
+        public AlienThread(JPanel panel) {
+            this.panel = panel;
+            aliens = new JPanel[filas][columnas];
+            for (int i = 0; i < filas; i++) {
+                for (int j = 0; j < columnas; j++) {
+                    JPanel alienPanel = new JPanel();
+                    alienPanel.setBounds(x0 + j * espacio, y0 + i * espacio, 40, 40);
+                    alienPanel.setBackground(Color.GREEN);
+                    aliens[i][j] = alienPanel;
+                    panel.add(alienPanel);
                 }
-                //
             }
         }
 
         @Override
-        public void update(Observable o, Object arg) {
-            aliens = (Enemigos) arg;
+        public void run() {
+            int dx = 1;
+            int dy = 0;
+            while (true) {
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                x0 += dx;
+                y0 += dy;
+                if (x0 < 0 || x0 + columnas * espacio > panel.getWidth()) {
+                    dx = -dx;
+                    y0 += espacio;
+                }
+                for (int i = 0; i < filas; i++) {
+                    for (int j = 0; j < columnas; j++) {
+                        aliens[i][j].setBounds(x0 + j * espacio, y0 + i * espacio, 40, 40);
+                    }
+                }
+                panel.repaint();
+            }
         }
     }
-
-
 
 
 }
