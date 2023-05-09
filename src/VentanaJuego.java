@@ -7,6 +7,10 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.ArrayList;
 
 
 public class VentanaJuego extends JFrame {
@@ -31,7 +35,7 @@ public class VentanaJuego extends JFrame {
         this.setSize(700, 700);
         this.setLocationRelativeTo(null);
         this.setLayout(null);
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         Tutorial();
     }
@@ -296,6 +300,7 @@ public class VentanaJuego extends JFrame {
                 case KeyEvent.VK_SPACE:
                     isFiring = true;
                     disparoSonido.play();
+                    disparoSonido.stop();
                     break;
             }
         }
@@ -534,7 +539,7 @@ public class VentanaJuego extends JFrame {
             while (true) {
             	
                 if (!isFiring && panelAlien!=null) {
-                    bala = new paneldebala(panelAlien.getX(),panelAlien.getY());//necesita que le lleguen las cordenadas 
+                    bala = new paneldebala(panelAlien.getX()+20,panelAlien.getY()+20);//necesita que le lleguen las cordenadas 
                     panel.add(bala);
                     isFiring = true;
                 }
@@ -553,6 +558,7 @@ public class VentanaJuego extends JFrame {
     }
 
     //thread hilo aliens
+    
     public class AlienThread extends Thread {
         private JPanel panel;
         private JPanel aux;
@@ -560,6 +566,7 @@ public class VentanaJuego extends JFrame {
         private int x0 = 25;
         private int y0 = 25;
         private int espacio = 55;
+        ArrayList<JPanel> lista = new ArrayList<JPanel>();
 
         public AlienThread(JPanel panel) {
             this.panel = panel;
@@ -590,19 +597,20 @@ public class VentanaJuego extends JFrame {
                 }
                 
                 if (!bulletEnemy.isFiring) {//COMPRUEBA SI NO HAY BALA EN PANTALLA
+                	lista.clear();
                 	for (int i = 0; i < filas; i++) {
                         for (int j = 0; j < columnas; j++) {
                         	if (aliens[i][j].isVisible()) {//SI EL PANEL SIGUE VISIBLE(VIVO) LO AÑADE A UNA LISTA DE LOS CAMDIDATOS PARA DISPARAR
-                        		aux = aliens[i][j];// aqui es donde entra cuando encuentra un alien vivo y disponible
-                        		System.out.println("cambia de alien");
-                        		bulletEnemy.obtenerAlien(aux);
-                        		System.out.println("hola");
+                        		aux = aliens[i][j];
+                        		lista.add(aux);
                         	}
                       }
                 	}
                 }else {
-                	
                 }
+                
+                Collections.shuffle(lista);
+                bulletEnemy.obtenerAlien(lista.get(0));
                 
                 x0 += dx;
                 y0 += dy;
