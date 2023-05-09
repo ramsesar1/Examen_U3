@@ -1,4 +1,5 @@
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,6 +12,12 @@ import java.io.InputStream;
 public class VentanaJuego extends JFrame {
 
     public int score = 0, hiScore = 0;
+    private Sonido disparo_1;//VARIABLE GLOBAL PARA REPRODUCIR EL AUDIO
+    private Sonido disparo_2;
+    private Sonido disparo_3;
+    private Sonido destruccion_1;
+    private Sonido destruccion_2;
+    private Sonido destruccion_3;
     //public static Font fuentepixel = cargarFuente("src//Recursos//fuente.ttf");
 
     public VentanaJuego() {
@@ -36,7 +43,9 @@ public class VentanaJuego extends JFrame {
         panelTuto.setBackground(Color.black);
         panelTuto.setLayout(null);
         this.add(panelTuto);
-
+        
+        cargarSonido();//LLAMAR AL METODO QUE CARGA EL AUDIO
+        
         ImageIcon flechaI = new ImageIcon("src//Recursos//flechaI.png");
         JLabel flechai = new JLabel();
         flechai.setBounds(430, 335, 60, 60);
@@ -133,6 +142,7 @@ public class VentanaJuego extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 remove(panelTuto);
+                disparo_1.play();//PRUEBA DE AUDIO
                 panelMenu();
                 repaint();
             }
@@ -228,9 +238,21 @@ public class VentanaJuego extends JFrame {
         fuente = fuente.deriveFont(12f);
         return fuente;
     }
-
+    
+    public void cargarSonido() {//FUNCION PARA CARGAR AUDIO
+    	try {
+    		disparo_1 = new Sonido("src/SonidosJuego/Audio_disparoLaser1.wav");
+    		disparo_2 = new Sonido("src/SonidosJuego/Audio_disparoLaser1.wav");
+    		disparo_3 = new Sonido("src/SonidosJuego/Audio_disparoLaser1.wav");
+    		destruccion_1 = new Sonido("src/SonidosJuego/Audio_Destruccion1.wav");
+    		destruccion_2 = new Sonido("src/SonidosJuego/Audio_Destruccion1.wav");
+    		destruccion_3 = new Sonido("src/SonidosJuego/Audio_Destruccion1.wav");
+    	}catch (Exception e) {
+			System.err.println("No encontro el archivo de audio");
+		}
+	 }
+    
     //thread hilo del jugador
-
     private static class JugadorThread extends Thread implements KeyListener {
         private final JPanel panel;
         private int x = 350;
