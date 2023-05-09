@@ -20,6 +20,10 @@ public class VentanaJuego extends JFrame {
     private Sonido destruccion_3;
     //public static Font fuentepixel = cargarFuente("src//Recursos//fuente.ttf");
 
+    private static int filas = 5;
+    private static int columnas = 11;
+    private static JPanel[][] aliens = new JPanel[filas][columnas];
+
     public VentanaJuego() {
         iniciarComponentes();
     }
@@ -142,7 +146,7 @@ public class VentanaJuego extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 remove(panelTuto);
-                disparo_1.play();//PRUEBA DE AUDIO
+                disparo_3.play();//PRUEBA DE AUDIO
                 panelMenu();
                 repaint();
             }
@@ -242,8 +246,8 @@ public class VentanaJuego extends JFrame {
     public void cargarSonido() {//FUNCION PARA CARGAR AUDIO
     	try {
     		disparo_1 = new Sonido("src/SonidosJuego/Audio_disparoLaser1.wav");
-    		disparo_2 = new Sonido("src/SonidosJuego/Audio_disparoLaser1.wav");
-    		disparo_3 = new Sonido("src/SonidosJuego/Audio_disparoLaser1.wav");
+    		disparo_2 = new Sonido("src/SonidosJuego/Audio_disparoLaser2.wav");
+    		disparo_3 = new Sonido("src/SonidosJuego/Audio_disparoLaser3.wav");
     		destruccion_1 = new Sonido("src/SonidosJuego/Audio_Destruccion1.wav");
     		destruccion_2 = new Sonido("src/SonidosJuego/Audio_Destruccion1.wav");
     		destruccion_3 = new Sonido("src/SonidosJuego/Audio_Destruccion1.wav");
@@ -367,6 +371,14 @@ public class VentanaJuego extends JFrame {
 
             public void mover() {
                 y -= velocidad;
+                for(int i=0;i<5;i++){
+                    for(int j=0;j<11;j++){
+                        if(x>aliens[i][j].getX() && x<aliens[i][j].getX()+55 && y>aliens[i][j].getY() && y<aliens[i][j].getY()+55 && aliens[i][j].isVisible()==true){
+                            aliens[i][j].setVisible(false);
+                            remove();
+                        }
+                    }
+                }
                 if (y < 0) {
                     remove();
                 } else {
@@ -449,12 +461,9 @@ public class VentanaJuego extends JFrame {
     //thread hilo aliens
     public class AlienThread extends Thread {
         private JPanel panel;
-        private int filas = 5;
-        private int columnas = 11;
         private int x0 = 25;
         private int y0 = 25;
         private int espacio = 55;
-        private JPanel[][] aliens;
 
         public AlienThread(JPanel panel) {
             this.panel = panel;

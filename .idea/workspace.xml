@@ -6,14 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="274cf6bb-67ea-4718-afed-4053cf0ff7b2" name="Changes" comment="Se arregla el problema donde el juego no se actualizaba a no ser que estuviera uno spameando botones">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Examen U3/Enemigos.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Examen U3/Navecita.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Examen U3/VentanaJuego$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Examen U3/VentanaJuego$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Examen U3/VentanaJuego$DisparoThread$paneldebalas.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Examen U3/VentanaJuego$DisparoThread$paneldebalas.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Examen U3/VentanaJuego$DisparoThread.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Examen U3/VentanaJuego$DisparoThread.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Examen U3/VentanaJuego$EscudoThread$Escudo.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Examen U3/VentanaJuego$EscudoThread$Escudo.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Examen U3/VentanaJuego$EscudoThread.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Examen U3/VentanaJuego$EscudoThread.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Examen U3/VentanaJuego$JugadorThread.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Examen U3/VentanaJuego$JugadorThread.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Examen U3/VentanaJuego$aliensEnemigos$panel_enemigos.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Examen U3/VentanaJuego$aliensEnemigos$panel_enemigos.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Examen U3/VentanaJuego$aliensEnemigos.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Examen U3/VentanaJuego$aliensEnemigos.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Examen U3/VentanaJuego$paneldejugador.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Examen U3/VentanaJuego$paneldejugador.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Examen U3/VentanaJuego.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Examen U3/VentanaJuego.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/VentanaJuego.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/VentanaJuego.java" afterDir="false" />
@@ -35,6 +35,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/VentanaJuego.java" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -129,12 +132,12 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/VentanaJuego.java</url>
-          <line>145</line>
+          <line>157</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/VentanaJuego.java</url>
-          <line>374</line>
+          <line>407</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>
